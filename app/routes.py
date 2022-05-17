@@ -3,23 +3,15 @@ import base64
 import os
 import boto3
 from werkzeug.utils import secure_filename
+import json
+from app import app
 
-from face import upload_face, facial_recognition
-
-UPLOAD_FOLDER = './static/img'
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+from app.api_logic import upload_face, facial_recognition, create_collection
 
 
 @app.route('/')
 def hello():
-    return render_template('index.html')
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return render_template('login_form.html')
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -31,17 +23,13 @@ def upload_file():
 
         response = upload_face(name=name, image=file)
 
-        if file and allowed_file(file_name):
-            filename = secure_filename(file_name)
-            with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), "wb") as fh:
-                fh.write(base64.b64decode(file))
-
         return response
     else:
         return jsonify({'message': 'Something went wrong'})
 
+
 @app.route('/create', methods=['GET', 'POST'])
-def create_collection():
+def create():
     if request.method == 'POST':
 
         name = request.form['name'].replace(" ", "")
@@ -60,12 +48,13 @@ def compare_image():
         file = request.form['file'].split(',')[1]
 
         response = facial_recognition(image=file)
-        return response
+        data = json.loads(response.get_data().decode("utf-8"))
+        print(data)
+        if int(data['confidence']) < 60:
+            return render_template('login_form.html');
+        else:
+            return render_template('admin_panel.html', user=data['id'])
     else:
-        return jsonify({'message': 'Something went wrong'})
+        return render_template('login_form.html');
 
 
-app.secret_key = '<SOMETHING_SUPER_SECRET>'
-
-if __name__ == '__main__':
-    app.run()

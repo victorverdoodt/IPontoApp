@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Admin panel</title>
+      {% else %}
+      <title>Admin panel</title>
+      {% endif %}
+    </head>
+
+    <body>
+        <div id="content">
+            <div>Login to admin panel</div>
+            {% block conteudo %}{% endblock %}
+            <script src="/static/webcam.js"></script>
+        </div>
+    </body>
+</html>

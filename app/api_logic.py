@@ -14,7 +14,7 @@ def create_collection(collection_id):
 
     # Create a collection
     print('Creating collection:' + collection_id)
-    response = dev.create_collection(CollectionId=collection_id)
+    response = dev_client.create_collection(CollectionId=collection_id)
     print('Collection ARN: ' + response['CollectionArn'])
     print('Status code: ' + str(response['StatusCode']))
     print('Done...')

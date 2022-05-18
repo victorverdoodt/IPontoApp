@@ -15,10 +15,11 @@ def token_required(f):
             return jsonify({'message': 'token is missing', 'data': []}), 401
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user = empresa_by_cnpj(username=data['username'])
+            current_user = empresa_by_cnpj(cnpj=data['username'])
         except:
             return jsonify({'message': 'token is invalid or expired', 'data': []}), 401
         return f(current_user, *args, **kwargs)
+
     return decorated
 
 
@@ -31,7 +32,7 @@ def auth():
         return jsonify({'message': 'user not found', 'data': []}), 401
 
     if user and check_password_hash(user.password, auth.password):
-        token = jwt.encode({'username': user.username, 'exp': datetime.datetime.now() + datetime.timedelta(hours=12) },
+        token = jwt.encode({'username': user.username, 'exp': datetime.datetime.now() + datetime.timedelta(hours=12)},
                            app.config['SECRET_KEY'])
         return jsonify({'message': 'Validated successfully', 'token': token.decode('UTF-8'),
                         'exp': datetime.datetime.now() + datetime.timedelta(hours=12)})

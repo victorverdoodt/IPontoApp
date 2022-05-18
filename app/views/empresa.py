@@ -1,7 +1,8 @@
 from werkzeug.security import generate_password_hash
 from app import db
-from flask import request, jsonify
+from flask import request, jsonify, url_for, flash, redirect, render_template
 from ..models.empresa import Empresa, empresa_schema, empresas_schema
+from ..forms.cadastro_empresa import EmpresaCadastro
 
 
 def get_empresas():
@@ -26,27 +27,24 @@ def get_empresa(id):
     return jsonify({'message': "user don't exist", 'data': {}}), 404
 
 
-def post_empresa():
-    nome = request.json['nome']
-    email = request.json['email']
-    cnpj = request.json['cnpj']
-    senha = request.json['senha']
-
-    empresa = empresa_by_cnpj(cnpj)
+def post_empresa(form):
+    empresa = empresa_by_cnpj(form.cnpj.data)
     if empresa:
         result = empresa_schema.dump(empresa)
-        return jsonify({'message': 'user already exists', 'data': {}})
+        return render_template('registro_empresa.html', form=form, error="user already exists")
 
-    pass_hash = generate_password_hash(senha)
-    empresa = Empresa(email, pass_hash, cnpj, nome)
+    pass_hash = generate_password_hash(form.senha.data)
+    empresa = Empresa(form.email.data, pass_hash, form.cnpj.data, form.nome.data)
 
     try:
         db.session.add(empresa)
         db.session.commit()
         result = empresa_schema.dump(empresa)
-        return jsonify({'message': 'successfully registered', 'data': result}), 201
+        return redirect('/authenticate')
     except:
-        return jsonify({'message': 'unable to update', 'data': {}}), 500
+        return render_template('registro_empresa.html',  form=form, error="Algo deu errado")
+
+    return render_template('registro_empresa.html', form=form, error=None)
 
 
 def update_empresa(id):

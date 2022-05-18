@@ -6,13 +6,33 @@ from werkzeug.utils import secure_filename
 import json
 from app import app
 from .views import empresa, helper, funcionario, funcionario_ponto
+from .forms.cadastro_empresa import EmpresaCadastro
+from .forms.login_empresa import EmpresaLogin
 
 from app.api_logic import upload_face, facial_recognition, create_collection
 
 
 @app.route('/')
 def hello():
-    return render_template('login_form.html')
+    return render_template('home_page.html')
+
+
+@app.route('/registrar', methods=['GET', 'POST'])
+def registro_empresa():
+    form = EmpresaCadastro()
+    if request.method == 'POST':
+        return empresa.post_empresa(form)
+
+    return render_template('registro_empresa.html',  form=form, error=None)
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def authenticate():
+    form = EmpresaLogin()
+    if request.method == 'POST':
+        return helper.auth(form)
+
+    return render_template('login_empresa.html', form=form, error=None);
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -66,15 +86,3 @@ def compare_image(current_user):
                 return render_template('admin_panel.html', user=func.nome)
     else:
         return render_template('login_form.html');
-
-
-@app.route('/authenticate', methods=['POST'])
-def authenticate():
-    return helper.auth()
-
-
-@app.route('/empresa', methods=['POST'])
-def post_empresa():
-    return empresa.post_empresa()
-
-

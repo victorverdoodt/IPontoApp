@@ -1,7 +1,7 @@
 import datetime
 from functools import wraps
 from app import app
-from flask import request, jsonify
+from flask import request, jsonify, render_template, make_response, redirect
 from .empresa import empresa_by_cnpj
 import jwt
 from werkzeug.security import check_password_hash
@@ -10,31 +10,29 @@ from werkzeug.security import check_password_hash
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
+        token = request.cookies.get('token')
         if not token:
-            return jsonify({'message': 'token is missing', 'data': []}), 401
+            return redirect("/login")
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
             current_user = empresa_by_cnpj(cnpj=data['username'])
         except:
-            return jsonify({'message': 'token is invalid or expired', 'data': []}), 401
+            return redirect("/login")
         return f(current_user, *args, **kwargs)
 
     return decorated
 
 
-def auth():
-    auth = request.authorization
-    if not auth or not auth.username or not auth.password:
-        return jsonify({'message': 'could not verify', 'WWW-Authenticate': 'Basic auth="Login required"'}), 401
-    user = empresa_by_cnpj(auth.username)
+def auth(form):
+    user = empresa_by_cnpj(form.cnpj.data)
     if not user:
-        return jsonify({'message': 'user not found', 'data': []}), 401
+        return render_template('login_empresa.html', form=form, error="user not found")
 
-    if user and check_password_hash(user.password, auth.password):
+    if user and check_password_hash(user.password, form.senha.data):
         token = jwt.encode({'username': user.username, 'exp': datetime.datetime.now() + datetime.timedelta(hours=12)},
                            app.config['SECRET_KEY'])
-        return jsonify({'message': 'Validated successfully', 'token': token.decode('UTF-8'),
-                        'exp': datetime.datetime.now() + datetime.timedelta(hours=12)})
+        resp = make_response(render_template('home_page.html'))
+        resp.set_cookie('token', token)
+        return resp
 
-    return jsonify({'message': 'could not verify', 'WWW-Authenticate': 'Basic auth="Login required"'}), 401
+    return render_template('login_empresa.html', form=form, error="'could not verify")

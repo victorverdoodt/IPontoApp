@@ -4,9 +4,9 @@ from app import db, ma
 
 class Empresa(db.Model):
     id_empresa = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nome = db.Column(db.String(50), unique=True, nullable=False)
-    email = db.Column(db.String(200), unique=True, nullable=False)
-    cnpj = db.Column(db.String(15), nullable=False)
+    nome = db.Column(db.String(50), unique=False, nullable=False)
+    email = db.Column(db.String(200), unique=False, nullable=False)
+    cnpj = db.Column(db.String(15), unique=True, nullable=False)
     senha = db.Column(db.String(20), unique=False, nullable=False)
     data_criacao = db.Column(db.DateTime, default=datetime.datetime.now())
     cargos = db.relationship('Cargo', backref='empresa', lazy=True)

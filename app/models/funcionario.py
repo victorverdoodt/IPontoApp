@@ -11,8 +11,8 @@ class Funcionario(db.Model):
     id_cargo = db.Column(db.Integer, db.ForeignKey('cargo.id_cargo'), nullable=False)
     id_empresa = db.Column(db.Integer, db.ForeignKey('empresa.id_empresa'), nullable=False)
     data_criacao = db.Column(db.DateTime, default=datetime.datetime.now())
-    empresas = db.relationship('Empresa', back_populates='funcionario')
-    cargo = db.relationship('Cargo', backref='funcionario', lazy=True)
+    empresas = db.relationship('Empresa', back_populates='funcionarios')
+    cargo = db.relationship('Cargo', backref='funcionarios', lazy=True)
     funcionario_ponto = db.relationship('Funcionario_ponto', backref='funcionario', lazy=True)
 
     def __init__(self, nome, cpf, senha, id_cargo, id_empresa):

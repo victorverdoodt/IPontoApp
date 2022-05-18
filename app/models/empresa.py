@@ -10,7 +10,7 @@ class Empresa(db.Model):
     senha = db.Column(db.String(20), unique=False, nullable=False)
     data_criacao = db.Column(db.DateTime, default=datetime.datetime.now())
     cargos = db.relationship('Cargo', backref='empresa', lazy=True)
-    funcionario = db.relationship('Funcionario', backref='empresa', lazy=True)
+    funcionarios = db.relationship('Funcionario', backref='empresa', lazy=True)
 
     def __init__(self, email, senha, cnpj, nome):
         self.cnpj = cnpj

@@ -5,7 +5,7 @@ import boto3
 from werkzeug.utils import secure_filename
 import json
 from app import app
-from .views import empresa, helper
+from .views import empresa, helper, funcionario, funcionario_ponto
 
 from app.api_logic import upload_face, facial_recognition, create_collection
 
@@ -15,21 +15,8 @@ def hello():
     return render_template('login_form.html')
 
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-
-        file = request.form['file'].split(',')[1]
-        name = request.form['name'].replace(" ", "")
-
-        response = upload_face(name=name, image=file)
-
-        return response
-    else:
-        return jsonify({'message': 'Something went wrong'})
-
-
 @app.route('/create', methods=['GET', 'POST'])
+@helper.token_required
 def create():
     if request.method == 'POST':
 
@@ -42,8 +29,26 @@ def create():
         return jsonify({'message': 'Something went wrong'})
 
 
+@app.route('/upload', methods=['GET', 'POST'])
+@helper.token_required
+def upload_file(current_user):
+    if request.method == 'POST':
+
+        file = request.form['file'].split(',')[1]
+        name = request.form['name'].replace(" ", "")
+        func = funcionario.funcionario_by_id(int(name))
+        if func and func.id_empresa == current_user.id_empresa:
+            response = upload_face(name=name, image=file)
+            return response
+
+        return jsonify({'message': 'Something went wrong'})
+    else:
+        return jsonify({'message': 'Something went wrong'})
+
+
 @app.route('/compare', methods=['GET', 'POST'])
-def compare_image():
+@helper.token_required
+def compare_image(current_user):
     if request.method == 'POST':
 
         file = request.form['file'].split(',')[1]
@@ -51,12 +56,21 @@ def compare_image():
         response = facial_recognition(image=file)
         data = json.loads(response.get_data().decode("utf-8"))
         print(data)
-        if int(data['confidence']) < 60:
+
+        if int(data['confidence']) < 90:
             return render_template('login_form.html');
         else:
-            return render_template('admin_panel.html', user=data['id'])
+            func = funcionario.funcionario_by_id(int(data['id']))
+            if func and func.id_empresa == current_user.id_empresa:
+                funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
+                return render_template('admin_panel.html', user=func.nome)
     else:
         return render_template('login_form.html');
+
+
+@app.route('/authenticate', methods=['POST'])
+def authenticate():
+    return helper.auth()
 
 
 @app.route('/empresa', methods=['POST'])
@@ -64,6 +78,3 @@ def post_empresa():
     return empresa.post_empresa()
 
 
-@app.route('/authenticate', methods=['POST'])
-def authenticate():
-    return helper.auth()

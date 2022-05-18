@@ -1,8 +1,37 @@
 {% extends "layout.html" %}
 <!--criamos um bloco de conteúdo a ser interpretado pelo python-->
 {% block conteudo %}
-<h2>Welcome to the admin panel, {{user}}</h2>
-<div>
-    <p>Here you can manage the website</p>
+<div style="display: inline-flex;flex-direction: column;align-items: center;">
+    <h4> Entrar </h4>
+    {% if error != None %}
+    <div class="card-panel teal">
+        <span class="white-text"> {{error}} </span>
+      </div>
+    {% endif %}
+    <form method="POST" action="/login">
+        <fieldset class="form-field" style="border: 0">
+            {{ form.cnpj.label }}
+            {{ form.cnpj }}
+            {% if form.cnpj.errors %}
+            <ul class="errors">
+                {% for error in form.cnpj.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </fieldset>
+        <fieldset class="form-field" style="border: 0">
+            {{ form.senha.label }}
+            {{ form.senha }}
+            {% if form.senha.errors %}
+            <ul class="errors">
+                {% for error in form.senha.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </fieldset>
+        <button class="btn waves-effect waves-light" type="submit" id="enviar">Entrar</button>
+    </form>
 </div>
 {% endblock %}

@@ -14,7 +14,7 @@ def token_required(f):
         if not token:
             return redirect("/login")
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
             current_user = empresa_by_cnpj(cnpj=data['username'])
         except:
             return redirect("/login")
@@ -23,15 +23,29 @@ def token_required(f):
     return decorated
 
 
+def token_validate(request):
+    token = request.cookies.get('token')
+
+    try:
+        data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+        current_user = empresa_by_cnpj(cnpj=data['username'])
+        if current_user:
+            return True
+    except:
+        return None
+
+    return None
+
+
 def auth(form):
     user = empresa_by_cnpj(form.cnpj.data)
     if not user:
         return render_template('login_empresa.html', form=form, error="user not found")
 
-    if user and check_password_hash(user.password, form.senha.data):
-        token = jwt.encode({'username': user.username, 'exp': datetime.datetime.now() + datetime.timedelta(hours=12)},
+    if user and check_password_hash(user.senha, form.senha.data):
+        token = jwt.encode({'username': user.cnpj, 'exp': datetime.datetime.now() + datetime.timedelta(hours=12)},
                            app.config['SECRET_KEY'])
-        resp = make_response(render_template('home_page.html'))
+        resp = make_response(render_template('home_page.html', logado=True))
         resp.set_cookie('token', token)
         return resp
 

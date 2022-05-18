@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, url_for, render_template, jsonify, send_from_directory
+from flask import Flask, flash, request, redirect, url_for, render_template, jsonify, send_from_directory, make_response
 import base64
 import os
 import boto3
@@ -14,7 +14,7 @@ from app.api_logic import upload_face, facial_recognition, create_collection
 
 @app.route('/')
 def hello():
-    return render_template('home_page.html')
+    return render_template('home_page.html', logado=helper.token_validate(request))
 
 
 @app.route('/registrar', methods=['GET', 'POST'])
@@ -23,7 +23,7 @@ def registro_empresa():
     if request.method == 'POST':
         return empresa.post_empresa(form)
 
-    return render_template('registro_empresa.html',  form=form, error=None)
+    return render_template('registro_empresa.html',  form=form, error=None, logado=helper.token_validate(request))
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -32,7 +32,14 @@ def authenticate():
     if request.method == 'POST':
         return helper.auth(form)
 
-    return render_template('login_empresa.html', form=form, error=None);
+    return render_template('login_empresa.html', form=form, error=None, logado=helper.token_validate(request))
+
+@app.route('/logout', methods=['GET'])
+def authenticate():
+    resp = make_response(render_template('home_page.html', logado=helper.token_validate(request)))
+    resp.set_cookie('token', None)
+
+    return resp
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -83,6 +90,6 @@ def compare_image(current_user):
             func = funcionario.funcionario_by_id(int(data['id']))
             if func and func.id_empresa == current_user.id_empresa:
                 funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
-                return render_template('admin_panel.html', user=func.nome)
+                return render_template('admin_panel.html', user=func.nome, logado=True)
     else:
-        return render_template('login_form.html');
+        return render_template('login_form.html', logado=True)

@@ -5,6 +5,7 @@ import boto3
 from werkzeug.utils import secure_filename
 import json
 from app import app
+from .views import empresa, helper
 
 from app.api_logic import upload_face, facial_recognition, create_collection
 
@@ -58,3 +59,11 @@ def compare_image():
         return render_template('login_form.html');
 
 
+@app.route('/empresa', methods=['POST'])
+def post_empresa():
+    return empresa.post_empresa()
+
+
+@app.route('/authenticate', methods=['POST'])
+def authenticate():
+    return helper.auth()

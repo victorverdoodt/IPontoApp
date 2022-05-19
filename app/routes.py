@@ -14,6 +14,11 @@ def hello():
     return render_template('home_page.html', logado=helper.token_validate(request))
 
 
+@app.route('/cadastro')
+def hello2():
+    return render_template('empresa_cadastro.html', logado=helper.token_validate(request))
+
+
 @app.route('/registrar', methods=['GET', 'POST'])
 def registro_empresa():
     logado = helper.token_validate(request)

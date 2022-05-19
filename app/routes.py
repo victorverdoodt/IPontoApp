@@ -47,6 +47,12 @@ def logout():
     return resp
 
 
+@app.route('/ponto', methods=['GET'])
+@helper.token_required
+def registra_ponto(current_user):
+    return render_template('registro_ponto.html', logado=helper.token_validate(request))
+
+
 @app.route('/create', methods=['GET', 'POST'])
 @helper.token_required
 def create():

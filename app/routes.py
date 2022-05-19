@@ -19,11 +19,15 @@ def hello():
 
 @app.route('/registrar', methods=['GET', 'POST'])
 def registro_empresa():
-    form = EmpresaCadastro()
-    if request.method == 'POST':
-        return empresa.post_empresa(form)
+    logado = helper.token_validate(request)
+    if not logado:
+        form = EmpresaCadastro()
+        if request.method == 'POST':
+            return empresa.post_empresa(form)
+    else:
+        return redirect("/")
 
-    return render_template('registro_empresa.html',  form=form, error=None, logado=helper.token_validate(request))
+    return render_template('registro_empresa.html', form=form, error=None, logado=logado)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -34,10 +38,11 @@ def authenticate():
 
     return render_template('login_empresa.html', form=form, error=None, logado=helper.token_validate(request))
 
+
 @app.route('/logout', methods=['GET'])
-def authenticate():
-    resp = make_response(render_template('home_page.html', logado=helper.token_validate(request)))
-    resp.set_cookie('token', None)
+def logout():
+    resp = make_response(redirect('/'))
+    resp.set_cookie('token', "")
 
     return resp
 
@@ -46,11 +51,8 @@ def authenticate():
 @helper.token_required
 def create():
     if request.method == 'POST':
-
         name = request.form['name'].replace(" ", "")
-
         response = create_collection(name)
-
         return response
     else:
         return jsonify({'message': 'Something went wrong'})

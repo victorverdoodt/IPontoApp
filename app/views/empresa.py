@@ -40,7 +40,7 @@ def post_empresa(form):
         db.session.add(empresa)
         db.session.commit()
         result = empresa_schema.dump(empresa)
-        return redirect('/authenticate')
+        return redirect('/login')
     except:
         return render_template('registro_empresa.html',  form=form, error="Algo deu errado")
 

@@ -22,3 +22,13 @@ body {
 main {
     flex: 1 0 auto;
 }
+
+.sidenav.sidenav-fixed{
+    left: 0;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    position: absolute;
+    top: 65px;
+    z-index: -1;
+    height: calc(90%);
+}

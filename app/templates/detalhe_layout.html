@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block conteudo %}
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/cadastro">Cadastro</a></li>
+        <li><a href="/cargos">Cargos</a></li>
+        <li><a href="/funcionarios">Funcionarios</a></li>
+    </ul>
+     {% block empresa %}{% endblock %}
+{% endblock %}

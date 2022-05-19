@@ -1,13 +1,10 @@
 from flask import Flask, flash, request, redirect, url_for, render_template, jsonify, send_from_directory, make_response
-import base64
-import os
-import boto3
-from werkzeug.utils import secure_filename
 import json
 from app import app
 from .views import empresa, helper, funcionario, funcionario_ponto
 from .forms.cadastro_empresa import EmpresaCadastro
 from .forms.login_empresa import EmpresaLogin
+from .forms.cadastro_funcionario import FuncionarioCadastro
 
 from app.api_logic import upload_face, facial_recognition, create_collection
 
@@ -51,6 +48,22 @@ def logout():
 @helper.token_required
 def registra_ponto(current_user):
     return render_template('registro_ponto.html', logado=helper.token_validate(request))
+
+@app.route('/empresa', methods=['GET'])
+@helper.token_required
+def detalhe_empresa(current_user):
+    return render_template('detalhe_empresa.html', logado=helper.token_validate(request))
+
+
+@app.route('/funcionarios', methods=['GET', 'POST'])
+@helper.token_required
+def registro_funcionario(current_user):
+    logado = helper.token_validate(request)
+    form = FuncionarioCadastro()
+    if request.method == 'POST':
+        return funcionario.post_funcionario(form)
+
+    return render_template('registro_funcionario.html', form=form, error=None, logado=logado)
 
 
 @app.route('/create', methods=['GET', 'POST'])

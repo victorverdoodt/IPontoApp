@@ -5,6 +5,7 @@ from .views import empresa, helper, funcionario, funcionario_ponto, cargo
 from .forms.cadastro_empresa import EmpresaCadastro
 from .forms.login_empresa import EmpresaLogin
 from .forms.cadastro_funcionario import FuncionarioCadastro
+from .forms.cadastro_cargo import CargoCadastro
 
 from app.api_logic import upload_face, facial_recognition, create_collection
 
@@ -76,7 +77,7 @@ def registro_funcionario(current_user):
     logado = helper.token_validate(request)
     form = FuncionarioCadastro()
     if request.method == 'POST':
-        return funcionario.post_funcionario(form)
+        return funcionario.post_funcionario(form, current_user.id_empresa)
 
     return render_template('registro_funcionario.html', form=form, error=None, logado=logado)
 
@@ -93,9 +94,9 @@ def detalhe_cargo(current_user):
 @helper.token_required
 def registro_cargo(current_user):
     logado = helper.token_validate(request)
-    form = FuncionarioCadastro()
+    form = CargoCadastro()
     if request.method == 'POST':
-        return cargo.post_cargo(form)
+        return cargo.post_cargo(form, current_user.id_empresa)
 
     return render_template('registro_cargo.html', form=form, error=None, logado=logado)
 

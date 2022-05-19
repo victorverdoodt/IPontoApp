@@ -6,7 +6,7 @@ from wtforms import (
     IntegerField,
     PasswordField,
     DateField,
-    SelectField
+    SelectField,
 )
 from wtforms.validators import (
     DataRequired,
@@ -16,7 +16,10 @@ from wtforms.validators import (
     URL
 )
 
-#nome, cpf, senha, id_cargo, id_empresa
+from ..models.cargo import Cargo, cargo_schema, cargos_schema
+
+
+# nome, cpf, senha, id_cargo, id_empresa
 class FuncionarioCadastro(FlaskForm):
     nome = StringField(
         'Nome',
@@ -37,11 +40,13 @@ class FuncionarioCadastro(FlaskForm):
             DataRequired()
         ]
     )
-    idCargo = IntegerField(
+    idCargo = SelectField(
+        # with a label
         'Cargo',
         [
             DataRequired()
-        ]
+        ],
+        choices=[('cpp', 'C++'), ('py', 'Python'), ('text', 'Plain Text')]
     )
     senha = PasswordField(
         'Senha',

@@ -43,6 +43,17 @@
                 {% endif %}
             </fieldset>
             <fieldset class="form-field" style="border: 0; text-align: left;">
+                {{ form.idCargo.label }}
+                {{ form.idCargo }}
+                {% if form.idCargo.errors %}
+                <ul class="errors">
+                    {% for error in form.idCargo.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.senha.label }}
                 {{ form.senha }}
                 {% if form.senha.errors %}

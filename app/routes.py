@@ -65,6 +65,7 @@ def detalhe_funcionario(current_user):
 
 
 @app.route('/funcionario', methods=['GET', 'POST'])
+
 @helper.token_required
 def registro_funcionario(current_user):
     logado = helper.token_validate(request)

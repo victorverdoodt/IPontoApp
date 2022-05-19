@@ -1,10 +1,19 @@
 {% extends "layout.html" %}
 {% block conteudo %}
-    <ul id="slide-out" class="sidenav sidenav-fixed">
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/cadastro">Cadastro</a></li>
-        <li><a href="/cargos">Cargos</a></li>
-        <li><a href="/funcionarios">Funcionarios</a></li>
-    </ul>
-     {% block empresa %}{% endblock %}
+<table>
+    <tr>
+        <td style="">
+            <ul id="slide-out" class="sidenav sidenav-fixed">
+                <li><a href="/empresa">Dashboard</a></li>
+                <li><a href="/cadastro">Cadastro</a></li>
+                <li><a href="/cargos">Cargos</a></li>
+                <li><a href="/funcionarios">Funcionarios</a></li>
+            </ul>
+        </td>
+        <td style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;width: 100%">
+            {% block empresa %}{% endblock %}
+        </td>
+    </tr>
+</table>
+
 {% endblock %}

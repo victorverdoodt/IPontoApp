@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash
 from app import db
-from flask import request, jsonify
+from flask import request, jsonify, redirect, render_template
 from ..models.cargo import Cargo, cargo_schema, cargos_schema
 
 
@@ -27,3 +27,13 @@ def create_cargo(titulo, descricao, id_empresa, hora_entrada, hora_almoco, hora_
         return True
     except:
         return False
+
+
+def post_cargo(form, idEmpresa):
+    funcionario = create_cargo(form.titulo.data, form.descricao.data, idEmpresa, form.hora_entrada.data, form.hora_almoco.data, form.hora_saida.data)
+    if funcionario:
+        return redirect('/empresa')
+    else:
+        return render_template('registro_cargo.html', form=form, error="user already exists")
+
+    return render_template('registro_cargo.html', form=form, error="Algo deu errado")

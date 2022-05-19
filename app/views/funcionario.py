@@ -18,6 +18,13 @@ def funcionario_by_cpf(cpf):
         return None
 
 
+def funcionarios_by_empresa(idEmpresa):
+    try:
+        return Funcionario.query.filter(Funcionario.id_empresa == idEmpresa)
+    except:
+        return None
+
+
 def create_funcionario(nome, cpf, senha, id_cargo, id_empresa):
     funcionario = Funcionario(nome, cpf, senha, id_cargo, id_empresa)
 

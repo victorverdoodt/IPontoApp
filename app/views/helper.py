@@ -16,6 +16,8 @@ def token_required(f):
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
             current_user = empresa_by_cnpj(cnpj=data['username'])
+            if not current_user:
+                return redirect("/login")
         except:
             return redirect("/login")
         return f(current_user, *args, **kwargs)

@@ -1,14 +1,14 @@
 {% extends "detalhe_layout.html" %}
 {% block empresa %}
 <div style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;">
-    <h5 class="indigo-text">Cadastrar um novo funcionario</h5>
+    <h5 class="indigo-text">Cadastrar um novo cargo</h5>
     <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
         {% if error != None %}
         <div class="card-panel teal">
             <span class="white-text"> {{error}} </span>
           </div>
         {% endif %}
-        <form method="POST" action="/registrar">
+        <form method="POST" action="/cargo">
             <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.nome.label }}
                 {{ form.nome }}
@@ -65,7 +65,7 @@
                 {% endif %}
             </fieldset>
             <button class="btn waves-effect waves-light" type="submit" id="enviar" style="margin: 25px;background-color: green;">Registrar</button>
-            <a href="/funcionarios"><button class="btn waves-effect waves-light" type="button" style="margin: 25px;background-color: red">Cancelar</button></a>
+            <a href="/cargos"><button class="btn waves-effect waves-light" type="button" style="margin: 25px;background-color: red">Cancelar</button></a>
         </form>
     </div>
 </div>

@@ -1,0 +1,24 @@
+{% extends "detalhe_layout.html" %}
+{% block empresa %}
+<div style="display: inline-flex;flex-direction: column;align-items: start;width: 100%;margin-left: 25%">
+   <a href="/funcionario"><button class="btn waves-effect waves-light"> Novo <i class="material-icons right">send</i> </button></a>
+  <table id="data" class="highlight">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>None</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id_funcionario }}</td>
+          <td>{{ user.none }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+{% endblock %}

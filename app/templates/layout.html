@@ -17,7 +17,7 @@
 
     <body class="d-flex flex-column h-100">
         <header>
-            <nav class="light-blue lighten-1" role="navigation">
+            <nav class="light-blue lighten-1" role="navigation" style="z-index: 1;">
                 <div class="nav-wrapper container"><a id="logo-container" href="./" class="brand-logo">Logo</a>
                     <ul class="right hide-on-med-and-down">
                         {% if logado %}
@@ -52,7 +52,7 @@
             </div>
         </main>
 
-        <footer class="page-footer blue" style=" bottom: 0">
+        <footer class="page-footer blue" style="bottom: 0; z-index: 2;">
             <div class="container">
                 <div class="row">
                     <div class="col l6 s12">

@@ -6,6 +6,8 @@ from wtforms import (
     IntegerField,
     PasswordField,
     DateField,
+    DateTimeField,
+    TimeField,
     SelectField
 )
 from wtforms.validators import (
@@ -30,20 +32,20 @@ class CargoCadastro(FlaskForm):
             DataRequired()
         ]
     )
-    hora_entrada = DateField(
+    hora_entrada = TimeField(
         'Hora Entrada',
         [
             DataRequired()
         ]
     )
-    hora_almoco = DateField(
-        'Hora almoco',
+    hora_almoco = TimeField(
+        'Hora Almoço',
         [
             DataRequired()
         ]
     )
-    hora_saida = DateField(
-        'Hora saida',
+    hora_saida = TimeField(
+        'Hora Saida',
         [
             DataRequired()
         ]

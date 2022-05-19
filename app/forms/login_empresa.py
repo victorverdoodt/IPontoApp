@@ -18,7 +18,7 @@ from wtforms.validators import (
 
 class EmpresaLogin(FlaskForm):
     cnpj = StringField(
-        'Cnpj',
+        'CNPJ',
         [
             DataRequired()
         ]

@@ -24,7 +24,7 @@ class EmpresaCadastro(FlaskForm):
         ]
     )
     cnpj = StringField(
-        'Cnpj',
+        'CNPJ',
         [
             DataRequired()
         ]

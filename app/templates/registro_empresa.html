@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 <!--criamos um bloco de conteúdo a ser interpretado pelo python-->
 {% block conteudo %}
-<div style="display: inline-flex;flex-direction: column;align-items: center;">
+<div style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;">
     <h5 class="indigo-text">Cadastrar uma nova empresa</h5>
     <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
         {% if error != None %}
@@ -10,7 +10,7 @@
           </div>
         {% endif %}
         <form method="POST" action="/registrar">
-            <fieldset class="form-field" style="border: 0">
+            <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.nome.label }}
                 {{ form.nome }}
                 {% if form.nome.errors %}
@@ -21,7 +21,7 @@
                 </ul>
                 {% endif %}
             </fieldset>
-            <fieldset class="form-field" style="border: 0">
+            <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.cnpj.label }}
                 {{ form.cnpj }}
                 {% if form.cnpj.errors %}
@@ -32,7 +32,7 @@
                 </ul>
                 {% endif %}
             </fieldset>
-            <fieldset class="form-field" style="border: 0">
+            <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.email.label }}
                 {{ form.email }}
                 {% if form.email.errors %}
@@ -43,7 +43,7 @@
                 </ul>
                 {% endif %}
             </fieldset>
-            <fieldset class="form-field" style="border: 0">
+            <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.senha.label }}
                 {{ form.senha }}
                 {% if form.senha.errors %}
@@ -54,7 +54,7 @@
                 </ul>
                 {% endif %}
             </fieldset>
-            <fieldset class="form-field" style="border: 0">
+            <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.confirmSenha.label }}
                 {{ form.confirmSenha }}
                 {% if form.confirmSenha.errors %}

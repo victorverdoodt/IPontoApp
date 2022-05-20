@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash
 from app import db
 from flask import request, jsonify, redirect, render_template
 from ..models.cargo import Cargo, cargo_schema, cargos_schema
+from sqlalchemy import func
 
 
 def cargo_by_id(id):
@@ -27,6 +28,12 @@ def create_cargo(titulo, descricao, id_empresa, hora_entrada, hora_almoco, hora_
         return True
     except:
         return False
+
+def count_cargo_by_id_empresa(id_empresa):
+    try:
+        return Cargo.query.filter(Cargo.id_empresa == id_empresa).with_entities(func.count()).scalar()
+    except:
+        return 0
 
 
 def post_cargo(form, idEmpresa):

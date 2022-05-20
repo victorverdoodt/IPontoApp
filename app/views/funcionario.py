@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash
 from app import db
 from flask import request, jsonify, render_template, redirect
 from ..models.funcionario import Funcionario, funcionario_schema, funcionarios_schema
+from sqlalchemy import func
 
 
 def funcionario_by_id(id):
@@ -36,6 +37,12 @@ def create_funcionario(nome, cpf, senha, email, id_cargo, id_empresa):
             return False
     return False
 
+
+def count_funcionario_by_id_empresa(id_empresa):
+    try:
+        return Funcionario.query.filter(Funcionario.id_empresa == id_empresa).with_entities(func.count()).scalar()
+    except:
+        return 0
 
 
 def post_funcionario(form, idEmpresa):

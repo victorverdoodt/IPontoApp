@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "detalhe_layout.html" %}
+<!--criamos um bloco de conteúdo a ser interpretado pelo python-->
+{% block conteudo %}
+<h2>Erro ao registrar ponto</h2>
+<div>
+    <a href="/ponto"><button class="btn waves-effect waves-light">Voltar</button></a>
+</div>
+{% endblock %}

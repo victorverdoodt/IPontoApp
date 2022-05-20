@@ -64,7 +64,7 @@ def cadastro_ponto(current_user, id):
 @app.route('/empresa', methods=['GET'])
 @helper.token_required
 def detalhe_empresa(current_user):
-    return render_template('detalhe_empresa.html', logado=helper.token_validate(request))
+    return render_template('detalhe_empresa.html', logado=helper.token_validate(request), fCount=funcionario.count_funcionario_by_id_empresa(current_user.id_empresa), cCount=cargo.count_cargo_by_id_empresa(current_user.id_empresa))
 
 
 @app.route('/funcionarios', methods=['GET'])
@@ -147,11 +147,14 @@ def compare_image(current_user):
         print(data)
 
         if int(data['confidence']) < 90:
-            return render_template('login_form.html');
+            return render_template('ponto_erro.html', logado=helper.token_validate(request))
         else:
             func = funcionario.funcionario_by_id(int(data['id']))
             if func and func.id_empresa == current_user.id_empresa:
-                funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
-                return render_template('admin_panel.html', user=func.nome, logado=True)
+                cria = funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
+                if cria:
+                    return render_template('ponto_sucesso.html', user=funcionario.funcionario_by_id(int(func.nome)).nome, logado=helper.token_validate(request))
+                else:
+                    return render_template('ponto_erro.html', logado=helper.token_validate(request))
     else:
-        return render_template('login_form.html', logado=True)
+        return render_template('ponto_erro.html', logado=helper.token_validate(request))

@@ -42,16 +42,18 @@
                 </ul>
                 {% endif %}
             </fieldset>
-            <fieldset class="form-field" style="border: 0; text-align: left;">
-                {{ form.idCargo.label }}
-                {{ form.idCargo }}
-                {% if form.idCargo.errors %}
-                <ul class="errors">
-                    {% for error in form.idCargo.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+            </fieldset>
+                {{ form.idCargo.label(style="margin: 13px") }}
+                <div class="input-field col s12">
+                    {{ form.idCargo(style="display: block;") }}
+                    {% if form.idCargo.errors %}
+                    <ul class="errors">
+                        {% for error in form.idCargo.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
             </fieldset>
             <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.senha.label }}

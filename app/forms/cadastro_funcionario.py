@@ -40,13 +40,14 @@ class FuncionarioCadastro(FlaskForm):
             DataRequired()
         ]
     )
+
     idCargo = SelectField(
-        # with a label
         'Cargo',
         [
             DataRequired()
         ],
-        choices=[('cpp', 'C++'), ('py', 'Python'), ('text', 'Plain Text')]
+        choices=[],
+        coerce=int
     )
     senha = PasswordField(
         'Senha',

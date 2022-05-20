@@ -75,6 +75,8 @@ def detalhe_funcionario(current_user):
 def registro_funcionario(current_user):
     logado = helper.token_validate(request)
     form = FuncionarioCadastro()
+    countries_list = [(i.id_cargo, i.titulo) for i in cargo.cargo_by_id_empresa(current_user.id_empresa)]
+    form.idCargo.choices = countries_list
     if request.method == 'POST':
         return funcionario.post_funcionario(form, current_user.id_empresa)
 

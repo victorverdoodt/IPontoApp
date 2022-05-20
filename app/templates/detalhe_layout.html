@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block conteudo %}
 <table>
-    <tr>
-        <td style="">
+    <tr style="border: 0">
+        <td style="border: 0">
             <ul id="slide-out" class="sidenav sidenav-fixed">
                 <li><a href="/empresa">Dashboard</a></li>
                 <li><a href="/cadastro">Cadastro</a></li>
@@ -10,7 +10,7 @@
                 <li><a href="/funcionarios">Funcionarios</a></li>
             </ul>
         </td>
-        <td style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;width: 100%">
+        <td  style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;width: 100%; border: 0">
             {% block empresa %}{% endblock %}
         </td>
     </tr>

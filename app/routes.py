@@ -1,6 +1,7 @@
 from flask import Flask, flash, request, redirect, url_for, render_template, jsonify, send_from_directory, make_response
 import json
 from app import app
+from .Helpers import elasticemail
 from .views import empresa, helper, funcionario, funcionario_ponto, cargo
 from .forms.cadastro_empresa import EmpresaCadastro
 from .forms.login_empresa import EmpresaLogin
@@ -159,8 +160,14 @@ def compare_image(current_user):
             func = funcionario.funcionario_by_id(int(data['id']))
             if func and func.id_empresa == current_user.id_empresa:
                 funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
+                # send simple email to one recipient
+                r = elasticemail.send(
+                    func.email,
+                    "Registro de ponto",
+                    func.nome + ", Seu ponto foi registrado as " + str(datetime.datetime.now())
+                )
                 return render_template('ponto_sucesso.html',
-                                           user=funcionario.funcionario_by_id(func.id_funcionario).nome,
+                                           user=func.nome,
                                            data=datetime.datetime.now(),
                                            logado=helper.token_validate(request))
 

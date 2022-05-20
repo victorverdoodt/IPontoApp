@@ -23,7 +23,7 @@ def funcionario_by_cpf(cpf):
 
 def funcionarios_by_empresa(idEmpresa):
     try:
-        return Funcionario.query.filter(Funcionario.id_empresa == idEmpresa)
+        return Funcionario.query.filter(Funcionario.id_empresa == idEmpresa).all()
     except:
         return None
 

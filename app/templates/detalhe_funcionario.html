@@ -7,6 +7,7 @@
       <tr>
         <th>Id</th>
         <th>None</th>
+        <th>CPF</th>
         <th>Email</th>
       </tr>
     </thead>
@@ -14,7 +15,8 @@
       {% for user in users %}
         <tr>
           <td>{{ user.id_funcionario }}</td>
-          <td>{{ user.none }}</td>
+          <td>{{ user.nome }}</td>
+          <td>{{ user.cpf }}</td>
           <td>{{ user.email }}</td>
           <td><a href="/ponto/{{ user.id_funcionario }}"><button class="btn-floating"><i class="Small material-icons">add_a_photo</i></button></a></td>
         </tr>

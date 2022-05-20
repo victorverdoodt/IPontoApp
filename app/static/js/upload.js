@@ -2,7 +2,7 @@ var LOADING = false;
 
 // Grab elements, create settings, etc.
 var video = document.getElementById('video');
-
+var haveVideo = false;
 // Get access to the camera!
 if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     // Not adding `{ audio: true }` since we only want video now
@@ -10,6 +10,7 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         //video.src = window.URL.createObjectURL(stream);
         video.srcObject = stream;
         video.play();
+        haveVideo = true;
     });
 }
 
@@ -20,6 +21,10 @@ var video = document.getElementById('video');
 
 // Trigger photo take
 document.getElementById("snap").addEventListener("click", function() {
+    if(!haveVideo){
+        alert('Precisa de camera')
+        return
+    }
     if (document.getElementById('name').value.length < 1) {
       alert('Must provide a name!');
       return

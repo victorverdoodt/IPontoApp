@@ -135,8 +135,12 @@ def upload_file(current_user):
         name = request.form['name'].replace(" ", "")
         func = funcionario.funcionario_by_id(int(name))
         if func and func.id_empresa == current_user.id_empresa:
-            upload_face(name=name, image=file)
-            return render_template('registro_sucesso.html', logado=helper.token_validate(request), user=func.nome)
+            r = upload_face(name=name, image=file)
+            data = json.loads(r.get_data().decode("utf-8"))
+            if data['message'] == 'Face Uploaded!':
+                return render_template('registro_sucesso.html', logado=helper.token_validate(request), user=func.nome)
+            else:
+                return render_template('registro_erro.html', logado=helper.token_validate(request))
 
         return render_template('registro_erro.html', logado=helper.token_validate(request))
     else:

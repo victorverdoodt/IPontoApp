@@ -6,7 +6,7 @@ from .forms.cadastro_empresa import EmpresaCadastro
 from .forms.login_empresa import EmpresaLogin
 from .forms.cadastro_funcionario import FuncionarioCadastro
 from .forms.cadastro_cargo import CargoCadastro
-
+import datetime
 from app.api_logic import upload_face, facial_recognition, create_collection
 
 
@@ -161,6 +161,7 @@ def compare_image(current_user):
                 funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
                 return render_template('ponto_sucesso.html',
                                            user=funcionario.funcionario_by_id(func.id_funcionario).nome,
+                                           data=datetime.datetime.now(),
                                            logado=helper.token_validate(request))
 
     else:

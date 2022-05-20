@@ -11,6 +11,7 @@ class Empresa(db.Model):
     data_criacao = db.Column(db.DateTime, default=datetime.datetime.now())
     cargos = db.relationship('Cargo', backref='empresa', lazy=True)
     funcionarios = db.relationship('Funcionario', backref='empresa', lazy=True)
+    funcionario_pontos = db.relationship('Funcionario_ponto', backref='empresa', lazy=True)
 
     def __init__(self, email, senha, cnpj, nome):
         self.cnpj = cnpj

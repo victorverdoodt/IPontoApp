@@ -9,6 +9,9 @@ from .forms.cadastro_funcionario import FuncionarioCadastro
 from .forms.cadastro_cargo import CargoCadastro
 import datetime
 from app.api_logic import upload_face, facial_recognition, create_collection
+import flask_excel as excel
+
+excel.init_excel(app)
 
 
 @app.route('/')
@@ -65,6 +68,15 @@ def registra_ponto(current_user):
 @helper.token_required
 def cadastro_ponto(current_user, id):
     return render_template('cadastro_ponto.html', logado=helper.token_validate(request), id=id)
+
+
+@app.route('/ponto/<id>/relatorio', methods=['GET'])
+@helper.token_required
+def relatorio_ponto(current_user, id):
+    ret = funcionario_ponto.funcionario_ponto_relatorio(current_user.id_empresa, id)
+    if ret:
+        return excel.make_response_from_array(ret, "csv")
+    return redirect('/funcionarios')
 
 
 @app.route('/empresa', methods=['GET'])
@@ -162,7 +174,7 @@ def compare_image(current_user):
             else:
                 func = funcionario.funcionario_by_id(int(data['id']))
                 if func and func.id_empresa == current_user.id_empresa:
-                    funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
+                    funcionario_ponto.create_funcionario_ponto(func.id_funcionario, current_user.id_empresa)
                     # send simple email to one recipient
                     r = elasticemail.send(
                         func.email,

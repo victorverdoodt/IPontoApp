@@ -152,24 +152,24 @@ def compare_image(current_user):
 
         response = facial_recognition(image=file)
         data = json.loads(response.get_data().decode("utf-8"))
-        print(data)
-
-        if int(data['confidence']) < 90:
-            return render_template('ponto_erro.html', logado=helper.token_validate(request))
-        else:
-            func = funcionario.funcionario_by_id(int(data['id']))
-            if func and func.id_empresa == current_user.id_empresa:
-                funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
-                # send simple email to one recipient
-                r = elasticemail.send(
-                    func.email,
-                    "Registro de ponto",
-                    func.nome + ", Seu ponto foi registrado as " + str(datetime.datetime.now())
-                )
-                return render_template('ponto_sucesso.html',
+        if data['message'] == 'Face Found!':
+            if int(data['confidence']) < 90:
+                return render_template('ponto_erro.html', logado=helper.token_validate(request))
+            else:
+                func = funcionario.funcionario_by_id(int(data['id']))
+                if func and func.id_empresa == current_user.id_empresa:
+                    funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
+                    # send simple email to one recipient
+                    r = elasticemail.send(
+                        func.email,
+                        "Registro de ponto",
+                        func.nome + ", Seu ponto foi registrado as " + str(datetime.datetime.now())
+                    )
+                    return render_template('ponto_sucesso.html',
                                            user=func.nome,
                                            data=datetime.datetime.now(),
                                            logado=helper.token_validate(request))
-
+        else:
+            return render_template('ponto_erro.html', logado=helper.token_validate(request))
     else:
         return render_template('ponto_erro.html', logado=helper.token_validate(request))

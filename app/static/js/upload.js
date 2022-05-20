@@ -11,6 +11,9 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         video.srcObject = stream;
         video.play();
         haveVideo = true;
+    }).catch(function(err) {
+            console.log("Unable to capture WebCam.", err);
+             haveVideo = false;
     });
 }
 

@@ -25,19 +25,21 @@ def funcionarios_by_empresa(idEmpresa):
         return None
 
 
-def create_funcionario(nome, cpf, senha, id_cargo, id_empresa):
-    funcionario = Funcionario(nome, cpf, senha, id_cargo, id_empresa)
+def create_funcionario(nome, cpf, senha, email, id_cargo, id_empresa):
+    funcionario = Funcionario(nome, cpf, senha, email, id_cargo, id_empresa)
+    if funcionario:
+        try:
+            db.session.add(funcionario)
+            db.session.commit()
+            return True
+        except:
+            return False
+    return False
 
-    try:
-        db.session.add(funcionario)
-        db.session.commit()
-        return True
-    except:
-        return False
 
 
 def post_funcionario(form, idEmpresa):
-    funcionario = create_funcionario(form.nome.data, form.cpf.data, form.senha.data, form.id_cargo.data, idEmpresa)
+    funcionario = create_funcionario(form.nome.data, form.cpf.data, form.senha.data, form.email.data, form.idCargo.data, idEmpresa)
     if funcionario:
         return redirect('/empresa')
     else:

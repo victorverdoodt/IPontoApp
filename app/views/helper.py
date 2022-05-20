@@ -47,7 +47,7 @@ def auth(form):
     if user and check_password_hash(user.senha, form.senha.data):
         token = jwt.encode({'username': user.cnpj, 'exp': datetime.datetime.now() + datetime.timedelta(hours=12)},
                            app.config['SECRET_KEY'])
-        resp = make_response(render_template('home_page.html', logado=True))
+        resp = make_response(redirect('/empresa'))
         resp.set_cookie('token', token)
         return resp
 

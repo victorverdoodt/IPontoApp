@@ -12,7 +12,11 @@ from app.api_logic import upload_face, facial_recognition, create_collection
 
 @app.route('/')
 def hello():
-    return render_template('home_page.html', logado=helper.token_validate(request))
+    logado = helper.token_validate(request)
+    if not logado:
+        return render_template('home_page.html', logado=logado)
+    else:
+        return redirect('/empresa')
 
 
 @app.route('/cadastro')

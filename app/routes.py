@@ -134,12 +134,12 @@ def upload_file(current_user):
         name = request.form['name'].replace(" ", "")
         func = funcionario.funcionario_by_id(int(name))
         if func and func.id_empresa == current_user.id_empresa:
-            response = upload_face(name=name, image=file)
-            return response
+            upload_face(name=name, image=file)
+            return render_template('registro_sucesso.html', logado=helper.token_validate(request), user=func.nome)
 
-        return jsonify({'message': 'Something went wrong'})
+        return render_template('registro_erro.html', logado=helper.token_validate(request))
     else:
-        return jsonify({'message': 'Something went wrong'})
+        return render_template('registro_erro.html', logado=helper.token_validate(request))
 
 
 @app.route('/compare', methods=['GET', 'POST'])
@@ -158,12 +158,10 @@ def compare_image(current_user):
         else:
             func = funcionario.funcionario_by_id(int(data['id']))
             if func and func.id_empresa == current_user.id_empresa:
-                cria = funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
-                if cria:
-                    return render_template('ponto_sucesso.html',
-                                           user=funcionario.funcionario_by_id(int(func.nome)).nome,
+                funcionario_ponto.create_funcionario_ponto(func.id_funcionario)
+                return render_template('ponto_sucesso.html',
+                                           user=funcionario.funcionario_by_id(func.id_funcionario).nome,
                                            logado=helper.token_validate(request))
-                else:
-                    return render_template('ponto_erro.html', logado=helper.token_validate(request))
+
     else:
         return render_template('ponto_erro.html', logado=helper.token_validate(request))

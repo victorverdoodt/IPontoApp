@@ -44,7 +44,7 @@ function convertCanvasToImage(canvas, upload) {
 function upload(image) {
     LOADING = true;
     console.log("Uploading...");
-    document.getElementById('message').innerHTML = "Uploading...";
+    document.getElementById('message').innerHTML = "Enviando...";
     var name = document.getElementById('name').value;
 
     // build the form

@@ -25,7 +25,7 @@ document.getElementById("snap").addEventListener("click", function() {
       return
     }
     context.drawImage(video, 0, 0, 640, 480);
-    convertCanvasToImage(canvas, (image) => upload(image))
+    convertCanvasToImage(canvas, (image) => compare(image))
 });
 
 // Converts canvas to an image
@@ -40,7 +40,7 @@ function convertCanvasToImage(canvas, upload) {
 function compare(image) {
     LOADING = true;
     console.log("Uploading...");
-    document.getElementById('message').innerHTML = "Uploading...";
+    document.getElementById('message').innerHTML = "Comparando...";
 
     // build the form
     var formData = new FormData();

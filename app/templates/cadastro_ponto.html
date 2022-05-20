@@ -10,7 +10,12 @@
             <form method="post" enctype=multipart/form-data id="myForm">
               <input style="visibility: hidden;pointer-events:none;" id='name' type='text' value="{{ id }}">
             </form>
-            <button id="snap" class="btn waves-effect waves-light">Cadastrar foto</button>
+            <table>
+                <tr>
+                    <td><button id="snap" class="btn waves-effect waves-light">Cadastrar foto</button></td>
+                    <td><a href="/funcionarios"><button class="btn waves-effect waves-light" type="button" style="margin: 25px;background-color: red">Cancelar</button></a></td>
+                </tr>
+            </table>
             <h2 id="message"></h2>
         </div>
         <div id="results"></div>

@@ -3,6 +3,9 @@ from app import db
 from flask import request, jsonify, url_for, flash, redirect, render_template
 from ..models.empresa import Empresa, empresa_schema, empresas_schema
 from ..forms.cadastro_empresa import EmpresaCadastro
+from validate_docbr import CNPJ
+
+cnpj = CNPJ()
 
 
 def get_empresas():
@@ -30,8 +33,10 @@ def get_empresa(id):
 def post_empresa(form):
     empresa = empresa_by_cnpj(form.cnpj.data)
     if empresa:
-        result = empresa_schema.dump(empresa)
-        return render_template('registro_empresa.html', form=form, error="user already exists")
+        return render_template('registro_empresa.html', form=form, error="CNPJ já cadastrado")
+
+    if not cnpj.validate(form.cnpj.data):
+        return render_template('registro_empresa.html', form=form, error="CNPJ invalido")
 
     pass_hash = generate_password_hash(form.senha.data)
     empresa = Empresa(form.email.data, pass_hash, form.cnpj.data, form.nome.data)
@@ -39,10 +44,9 @@ def post_empresa(form):
     try:
         db.session.add(empresa)
         db.session.commit()
-        result = empresa_schema.dump(empresa)
         return redirect('/login')
     except:
-        return render_template('registro_empresa.html',  form=form, error="Algo deu errado")
+        return render_template('registro_empresa.html', form=form, error="Algo deu errado")
 
     return render_template('registro_empresa.html', form=form, error=None)
 

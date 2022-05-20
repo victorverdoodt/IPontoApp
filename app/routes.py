@@ -55,6 +55,11 @@ def logout():
 def registra_ponto(current_user):
     return render_template('registro_ponto.html', logado=helper.token_validate(request))
 
+@app.route('/ponto/<id>', methods=['GET'])
+@helper.token_required
+def cadastro_ponto(current_user, id):
+    return render_template('cadastro_ponto.html', logado=helper.token_validate(request), id=id)
+
 
 @app.route('/empresa', methods=['GET'])
 @helper.token_required

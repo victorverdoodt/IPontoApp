@@ -41,7 +41,7 @@ def create_funcionario(nome, cpf, senha, email, id_cargo, id_empresa):
 def post_funcionario(form, idEmpresa):
     funcionario = create_funcionario(form.nome.data, form.cpf.data, form.senha.data, form.email.data, form.idCargo.data, idEmpresa)
     if funcionario:
-        return redirect('/empresa')
+        return redirect('/funcionarios')
     else:
         return render_template('registro_funcionario.html', form=form, error="user already exists")
 

@@ -32,7 +32,7 @@ def create_cargo(titulo, descricao, id_empresa, hora_entrada, hora_almoco, hora_
 def post_cargo(form, idEmpresa):
     funcionario = create_cargo(form.titulo.data, form.descricao.data, idEmpresa, form.hora_entrada.data, form.hora_almoco.data, form.hora_saida.data)
     if funcionario:
-        return redirect('/empresa')
+        return redirect('/cargos')
     else:
         return render_template('registro_cargo.html', form=form, error="user already exists")
 

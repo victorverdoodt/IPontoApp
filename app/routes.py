@@ -72,8 +72,9 @@ def cadastro_ponto(current_user, id):
 
 
 @app.route('/ponto/<id>/relatorio', methods=['GET'])
-def relatorio_ponto(id):
-    ret = funcionario_ponto.funcionario_ponto_relatorio(1, id)
+@helper.token_required
+def relatorio_ponto(current_user, id):
+    ret = funcionario_ponto.funcionario_ponto_relatorio(current_user.id_empresa, id)
     if ret:
         column_names = ['id_funcionario', 'nome', 'data_criacao']
         return excel.make_response_from_query_sets(ret, column_names, "xlsx", file_name="relatorio" + str(id))

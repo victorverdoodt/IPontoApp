@@ -8,8 +8,8 @@ class Funcionario_ponto(db.Model):
     id_funcionario = db.Column(db.Integer, db.ForeignKey('funcionario.id_funcionario'), nullable=False)
     id_empresa = db.Column(db.Integer, db.ForeignKey('empresa.id_empresa'), nullable=False)
     data_criacao = db.Column(db.DateTime, default=datetime.datetime.now())
-    funcionarios = db.relationship('Funcionario', back_populates='funcionario_ponto')
-    empresas = db.relationship('Empresa', back_populates='funcionario_pontos')
+    funcionarios = db.relationship('Funcionario', back_populates='funcionario_ponto', lazy=True)
+    empresas = db.relationship('Empresa', back_populates='funcionario_pontos', lazy=True)
 
     def __init__(self, id_funcionario, id_empresa):
         self.id_funcionario = id_funcionario

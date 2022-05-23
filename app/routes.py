@@ -10,6 +10,7 @@ from .forms.cadastro_cargo import CargoCadastro
 import datetime
 from app.api_logic import upload_face, facial_recognition, create_collection
 import flask_excel as excel
+import numpy as np
 
 excel.init_excel(app)
 
@@ -75,7 +76,8 @@ def cadastro_ponto(current_user, id):
 def relatorio_ponto(current_user, id):
     ret = funcionario_ponto.funcionario_ponto_relatorio(current_user.id_empresa, id)
     if ret:
-        return excel.make_response_from_array(ret, "csv")
+        column_names = ['id_funcionario_ponto', 'data_criacao']
+        return excel.make_response_from_query_sets(ret, column_names, "xlsx", file_name="relatiorio" + str(id))
     return redirect('/funcionarios')
 
 

@@ -18,7 +18,10 @@
           <td>{{ user.nome }}</td>
           <td>{{ user.cpf }}</td>
           <td>{{ user.email }}</td>
-          <td><a href="/ponto/{{ user.id_funcionario }}"><button class="btn-floating"><i class="Small material-icons">add_a_photo</i></button></a></td>
+          <td>
+            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Cadastrar foto" href="/ponto/{{ user.id_funcionario }}"><i class="Small material-icons">add_a_photo</i></a>
+            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Retirar relatorio" href="/ponto/{{ user.id_funcionario }}/relatorio"><i class="Small material-icons">archive</i></a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>

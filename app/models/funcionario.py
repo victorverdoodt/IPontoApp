@@ -13,7 +13,7 @@ class Funcionario(db.Model):
     id_empresa = db.Column(db.Integer, db.ForeignKey('empresa.id_empresa'), nullable=False)
     data_criacao = db.Column(db.DateTime, default=datetime.datetime.now())
     empresas = db.relationship('Empresa', back_populates='funcionarios')
-    cargo = db.relationship('Cargo', backref='funcionarios', lazy=True)
+    cargo = db.relationship('Cargo', backref='funcionarios', lazy='dynamic')
     funcionario_ponto = db.relationship('Funcionario_ponto', backref='funcionario', lazy=True)
 
     def __init__(self, nome, cpf, senha, email, id_cargo, id_empresa):

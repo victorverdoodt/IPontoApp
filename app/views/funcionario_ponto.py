@@ -2,6 +2,8 @@ from werkzeug.security import generate_password_hash
 from app import db
 from datetime import date, datetime, timedelta
 from flask import request, jsonify
+
+from ..models.funcionario import Funcionario
 from ..models.funcionario_ponto import Funcionario_ponto, funcionario_ponto_schema, funcionario_pontos_schema
 from sqlalchemy import func, extract
 from itertools import groupby
@@ -51,8 +53,8 @@ def funcionario_ponto_relatorio(id_empresa, id_funcionario):
     last_month_first_day = last_month_last_day.replace(day=1)
 
     result = Funcionario_ponto.query.filter(
-        Funcionario_ponto.id_empresa == id_empresa and Funcionario_ponto.id_funcionario == id_funcionario and Funcionario_ponto.data_criacao <= today and
-        Funcionario_ponto.data_criacao >= first) \
+        Funcionario_ponto.id_empresa == id_empresa and Funcionario_ponto.id_funcionario == id_funcionario and today >= Funcionario_ponto.data_criacao >= first) \
+        .join(Funcionario, Funcionario.id_funcionario == Funcionario_ponto.id_funcionario, isouter=True) \
         .order_by(Funcionario_ponto.data_criacao).all()
 
     return result

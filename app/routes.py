@@ -76,8 +76,8 @@ def cadastro_ponto(current_user, id):
 def relatorio_ponto(current_user, id):
     ret = funcionario_ponto.funcionario_ponto_relatorio(current_user.id_empresa, id)
     if ret:
-        column_names = ['id_funcionario_ponto', 'data_criacao']
-        return excel.make_response_from_query_sets(ret, column_names, "xlsx", file_name="relatiorio" + str(id))
+        column_names = ['id_funcionario', 'none', 'data_criacao']
+        return excel.make_response_from_query_sets(ret, column_names, "xlsx", file_name="relatorio" + str(id))
     return redirect('/funcionarios')
 
 

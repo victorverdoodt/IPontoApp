@@ -16,6 +16,9 @@
           <td>{{ user.id_cargo }}</td>
           <td>{{ user.titulo }}</td>
           <td>{{ user.descricao }}</td>
+          <td>
+            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Editar" href="/cargo/{{ user.id_funcionario }}/editar"><i class="Small material-icons">mode_edit</i></a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>

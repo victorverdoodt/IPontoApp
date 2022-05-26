@@ -42,11 +42,10 @@
                 </ul>
                 {% endif %}
             </fieldset>
-            <fieldset>
-                {{ form.idCargo.label(style="margin: 13px") }}
+            <fieldset class="form-field" style="border: 0; text-align: left;">
+                {{ form.idCargo.label(style="margin: 0px") }}
                 <div class="input-field col s12">
-                    <label>Setor</label>
-                    {{ form.idCargo(style="display: block;") }}
+                    {{ form.idCargo(style="display: block;width: 100%;") }}
                     {% if form.idCargo.errors %}
                     <ul class="errors">
                         {% for error in form.idCargo.errors %}

@@ -20,7 +20,7 @@ def cargo_by_id_empresa(id_empresa):
 
 
 def create_cargo(titulo, descricao, id_empresa, hora_entrada, hora_almoco, hora_saida):
-    cargo = Cargo(titulo, descricao, id_empresa, hora_entrada, hora_almoco, hora_saida)
+    cargo = Cargo(titulo, descricao, id_empresa, hora_entrada, hora_almoco, hora_saida, 1)
 
     try:
         db.session.add(cargo)

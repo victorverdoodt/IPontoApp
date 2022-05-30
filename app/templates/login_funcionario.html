@@ -10,7 +10,7 @@
             <span class="white-text"> {{error}} </span>
           </div>
         {% endif %}
-        <form method="POST" action="/login">
+        <form method="POST" action="/loginfuncionario">
             <fieldset class="form-field" style="border: 0; text-align: left;">
                 {{ form.cpf.label }}
                 {{ form.cpf }}
@@ -36,7 +36,6 @@
             <button class="btn waves-effect waves-light" type="submit" id="enviar" style="margin: 25px;">Entrar</button>
         </form>
     </div>
-    <p>Não tem uma conta?, <a href="/registrar">registre-se</a> agora.</p>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

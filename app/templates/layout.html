@@ -20,22 +20,34 @@
             <nav class="light-blue lighten-1" role="navigation" style="z-index: 1;">
                 <div class="nav-wrapper container"><a id="logo-container" href="./" class="brand-logo">Logo</a>
                     <ul class="right hide-on-med-and-down">
-                        {% if logado %}
-                        <li><a href="/empresa">Empresa</a></li>
-                        <li><a href="/ponto">Ponto</a></li>
-                        <li><a href="/logout">Sair</a></li>
+                        {% if logado[0] %}
+                            {% if logado[1] == 0 %}
+                                <li><a href="/empresa">Empresa</a></li>
+                                <li><a href="/ponto">Ponto</a></li>
+                                <li><a href="/logout">Sair</a></li>
+                            {% else %}
+                                <li><a href="/detalhes">Empresa</a></li>
+                                <li><a href="/logout">Sair</a></li>
+                            {% endif %}
                         {% else %}
-                         <li><a href="/login">Entrar</a></li>
+                        <li><a href="/login">Empresa</a></li>
+                        <li><a href="/loginfuncionario">Funcionario</a></li>
                         {% endif %}
                     </ul>
 
                     <ul id="nav-mobile" class="sidenav">
-                        {% if logado %}
-                        <li><a href="/empresa">Empresa</a></li>
-                        <li><a href="/ponto">Ponto</a></li>
-                        <li><a href="/logout">Sair</a></li>
+                         {% if logado[0] %}
+                            {% if logado[1] == 0 %}
+                                <li><a href="/empresa">Empresa</a></li>
+                                <li><a href="/ponto">Ponto</a></li>
+                                <li><a href="/logout">Sair</a></li>
+                            {% else %}
+                                <li><a href="/detalhes">Empresa</a></li>
+                                <li><a href="/logout">Sair</a></li>
+                            {% endif %}
                         {% else %}
-                         <li><a href="/login">Entrar</a></li>
+                        <li><a href="/login">Empresa</a></li>
+                        <li><a href="/loginfuncionario">Funcionario</a></li>
                         {% endif %}
                     </ul>
                     <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>

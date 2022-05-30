@@ -29,7 +29,7 @@ def funcionarios_by_empresa(idEmpresa):
 
 
 def create_funcionario(nome, cpf, senha, email, id_cargo, id_empresa):
-    funcionario = Funcionario(nome, cpf, senha, email, id_cargo, id_empresa)
+    funcionario = Funcionario(nome, cpf, senha, email, id_cargo, id_empresa, 1)
     if funcionario:
         try:
             db.session.add(funcionario)
@@ -51,7 +51,8 @@ def post_funcionario(form, idEmpresa):
     if not cpf.validate(form.cpf.data):
         return render_template('registro_funcionario.html', form=form, error="CPF invalido")
 
-    funcionario = create_funcionario(form.nome.data, form.cpf.data, form.senha.data, form.email.data, form.idCargo.data, idEmpresa)
+    pass_hash = generate_password_hash(form.senha.data)
+    funcionario = create_funcionario(form.nome.data, form.cpf.data, pass_hash, form.email.data, form.idCargo.data, idEmpresa)
     if funcionario:
         return redirect('/funcionarios')
     else:

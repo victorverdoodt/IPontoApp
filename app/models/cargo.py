@@ -12,20 +12,22 @@ class Cargo(db.Model):
     hora_almoco = db.Column(db.Time)
     hora_saida = db.Column(db.Time)
     data_criacao = db.Column(db.DateTime, default=datetime.datetime.now())
+    id_status = db.Column(db.Integer)
     empresas = db.relationship('Empresa', back_populates='cargos')
 
-    def __init__(self, titulo, descricao, id_empresa, hora_entrada, hora_almoco, hora_saida):
+    def __init__(self, titulo, descricao, id_empresa, hora_entrada, hora_almoco, hora_saida, id_status):
         self.titulo = titulo
         self.descricao = descricao
         self.id_empresa = id_empresa
         self.hora_entrada = hora_entrada
         self.hora_almoco = hora_almoco
         self.hora_saida = hora_saida
+        self.id_status = id_status
 
 
 class CargoSchema(ma.Schema):
     class Meta:
-        fields = ('id_cargo', 'titulo', 'descricao', 'id_empresa', 'hora_entrada', 'hora_almoco', 'hora_saida', 'data_criacao')
+        fields = ('id_cargo', 'titulo', 'descricao', 'id_empresa', 'hora_entrada', 'hora_almoco', 'hora_saida', 'data_criacao', 'id_status')
 
 
 cargo_schema = CargoSchema()

@@ -9,21 +9,21 @@ cpf = CPF()
 
 def funcionario_by_id(id):
     try:
-        return Funcionario.query.filter(Funcionario.id_funcionario == id and Funcionario.id_status == 1).one()
+        return Funcionario.query.filter(Funcionario.id_funcionario == id).filter(Funcionario.id_status == 1).one()
     except:
         return None
 
 
 def funcionario_by_cpf(cpf):
     try:
-        return Funcionario.query.filter(Funcionario.cpf == cpf and Funcionario.id_status == 1).one()
+        return Funcionario.query.filter(Funcionario.cpf == cpf).filter(Funcionario.id_status == 1).one()
     except:
         return None
 
 
 def funcionarios_by_empresa(idEmpresa):
     try:
-        return Funcionario.query.filter(Funcionario.id_empresa == idEmpresa and Funcionario.id_status == 1).all()
+        return Funcionario.query.filter(Funcionario.id_empresa == idEmpresa).filter(Funcionario.id_status == 1).all()
     except:
         return None
 

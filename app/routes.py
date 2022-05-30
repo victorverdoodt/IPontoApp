@@ -186,6 +186,15 @@ def registro_cargo(current_user):
     return redirect('/detalhes')
 
 
+@app.route('/cargo/<id>/desabilitar', methods=['GET', 'POST'])
+@helper.token_required
+def desativar_cargo(current_user, id):
+    if current_user[1] == 0:
+        return cargo.desativar_cargo(id, current_user[0].id_empresa)
+
+    return redirect('/detalhes')
+
+
 @app.route('/create', methods=['GET', 'POST'])
 @helper.token_required
 def create(current_user):

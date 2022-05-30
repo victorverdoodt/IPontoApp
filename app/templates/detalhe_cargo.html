@@ -17,7 +17,7 @@
           <td>{{ user.titulo }}</td>
           <td>{{ user.descricao }}</td>
           <td>
-            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Editar" href="/cargo/{{ user.id_funcionario }}/editar"><i class="Small material-icons">mode_edit</i></a>
+            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Desativar" href="/cargo/{{ user.id_cargo }}/desabilitar"><i class="Small material-icons">delete_forever</i></a>
           </td>
         </tr>
       {% endfor %}

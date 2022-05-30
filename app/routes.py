@@ -113,6 +113,10 @@ def detalhe_funcionario(current_user):
     if current_user[1] == 0:
         logado = helper.token_validate(request)
         users = funcionario.funcionarios_by_empresa(current_user[0].id_empresa)
+
+        if cargo.count_cargo_by_id_empresa(current_user[0].id_empresa) <= 0:
+            return render_template('funcionario_erro.html',  logado=logado)
+
         return render_template('detalhe_funcionario.html', users=users, logado=logado)
 
     return redirect('/detalhes')
@@ -122,8 +126,12 @@ def detalhe_funcionario(current_user):
 @helper.token_required
 def registro_funcionario(current_user):
     if current_user[1] == 0:
+
         logado = helper.token_validate(request)
         form = FuncionarioCadastro()
+        if cargo.count_cargo_by_id_empresa(current_user[0].id_empresa) <= 0:
+            return render_template('funcionario_erro.html',  logado=logado)
+
         countries_list = [(i.id_cargo, i.titulo) for i in cargo.cargo_by_id_empresa(current_user[0].id_empresa)]
         form.idCargo.choices = countries_list
         if request.method == 'POST':

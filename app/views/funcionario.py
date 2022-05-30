@@ -59,9 +59,9 @@ def post_funcionario(form, idEmpresa):
     if funcionario:
         return redirect('/funcionarios')
     else:
-        return render_template('registro_funcionario.html', form=form, error="Funcionario já existe")
+        return render_template('registro_funcionario.html', form=form, error="Funcionario já existe", title="Cadastro funcionario")
 
-    return render_template('registro_funcionario.html', form=form, error="Algo deu errado")
+    return render_template('registro_funcionario.html', form=form, error="Algo deu errado", title="Cadastro funcionario")
 
 
 def update_funcionario(form):
@@ -90,4 +90,4 @@ def update_funcionario(form):
 
         return redirect('/funcionarios')
 
-    return render_template('registro_funcionario.html', form=form, error="Algo deu errado")
+    return render_template('registro_funcionario.html', form=form, error="Algo deu errado", title="Cadastro funcionario")

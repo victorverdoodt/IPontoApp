@@ -33,10 +33,10 @@ def get_empresa(id):
 def post_empresa(form):
     empresa = empresa_by_cnpj(form.cnpj.data)
     if empresa:
-        return render_template('registro_empresa.html', form=form, error="CNPJ já cadastrado")
+        return render_template('registro_empresa.html', form=form, error="CNPJ já cadastrado", title="Cadastro empresa")
 
     if not cnpj.validate(form.cnpj.data):
-        return render_template('registro_empresa.html', form=form, error="CNPJ invalido")
+        return render_template('registro_empresa.html', form=form, error="CNPJ invalido", title="Cadastro empresa")
 
     pass_hash = generate_password_hash(form.senha.data)
     empresa = Empresa(form.email.data, pass_hash, form.cnpj.data, form.nome.data)
@@ -46,9 +46,9 @@ def post_empresa(form):
         db.session.commit()
         return redirect('/login')
     except:
-        return render_template('registro_empresa.html', form=form, error="Algo deu errado")
+        return render_template('registro_empresa.html', form=form, error="Algo deu errado", title="Cadastro empresa")
 
-    return render_template('registro_empresa.html', form=form, error=None)
+    return render_template('registro_empresa.html', form=form, error=None, title="Cadastro empresa")
 
 
 def update_empresa(id):

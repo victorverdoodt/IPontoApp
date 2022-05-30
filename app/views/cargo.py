@@ -44,9 +44,9 @@ def post_cargo(form, idEmpresa):
     if funcionario:
         return redirect('/cargos')
     else:
-        return render_template('registro_cargo.html', form=form, error="user already exists")
+        return render_template('registro_cargo.html', form=form, error="user already exists", title="Cadastro cargo")
 
-    return render_template('registro_cargo.html', form=form, error="Algo deu errado")
+    return render_template('registro_cargo.html', form=form, error="Algo deu errado", title="Cadastro cargo")
 
 
 def desativar_cargo(id, idEmpresa):

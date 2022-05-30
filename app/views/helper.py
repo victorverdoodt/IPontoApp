@@ -59,7 +59,7 @@ def auth(form, empresa):
     if empresa:
         user = empresa_by_cnpj(form.cnpj.data)
         if not user:
-            return render_template('login_empresa.html', form=form, error="user not found")
+            return render_template('login_empresa.html', form=form, error="user not found", title="Login empresa")
 
         if user and check_password_hash(user.senha, form.senha.data):
             token = jwt.encode(
@@ -73,7 +73,7 @@ def auth(form, empresa):
     else:
         user = funcionario_by_cpf(form.cpf.data)
         if not user:
-            return render_template('login_funcionario.html', form=form, error="user not found")
+            return render_template('login_funcionario.html', form=form, error="user not found", title="Login funcionario")
 
         if user and check_password_hash(user.senha, form.senha.data):
             token = jwt.encode(

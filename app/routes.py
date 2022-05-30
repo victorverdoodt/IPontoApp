@@ -7,6 +7,7 @@ from .forms.cadastro_empresa import EmpresaCadastro
 from .forms.login_empresa import EmpresaLogin
 from .forms.login_funcionario import FuncionarioLogin
 from .forms.cadastro_funcionario import FuncionarioCadastro
+from .forms.editar_funcionario import FuncionarioEdiar
 from .forms.cadastro_cargo import CargoCadastro
 import datetime
 from app.api_logic import upload_face, facial_recognition, create_collection
@@ -129,6 +130,34 @@ def registro_funcionario(current_user):
             return funcionario.post_funcionario(form, current_user[0].id_empresa)
 
         return render_template('registro_funcionario.html', form=form, error=None, logado=logado)
+
+    return redirect('/detalhes')
+
+
+@app.route('/funcionario/<id>/editar', methods=['GET', 'POST'])
+@helper.token_required
+def editar_funcionario(current_user, id):
+    if current_user[1] == 0:
+        logado = helper.token_validate(request)
+        form = FuncionarioEdiar()
+        if request.method == 'GET':
+            countries_list = [(i.id_cargo, i.titulo) for i in cargo.cargo_by_id_empresa(current_user[0].id_empresa)]
+            form.idCargo.choices = countries_list
+            funci = funcionario.funcionario_by_id(id)
+            if funci:
+                form.senha.data = ""
+                form.nome.data = funci.nome
+                form.idCargo.data = funci.id_cargo
+                form.cpf.data = funci.cpf
+                form.email.data = funci.email
+
+        if request.method == 'POST':
+            funci = funcionario.funcionario_by_id(id)
+            if funci:
+                form.cpf.data = funci.cpf
+            return funcionario.update_funcionario(form)
+
+        return render_template('editar_funcionario.html', form=form, error=None, logado=logado, id=id)
 
     return redirect('/detalhes')
 

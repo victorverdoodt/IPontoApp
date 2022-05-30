@@ -1,0 +1,132 @@
+{% extends "detalhe_layout.html" %}
+{% block empresa %}
+<div style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;">
+    <h5 class="indigo-text">Editar um funcionario</h5>
+    <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+        {% if error != None %}
+        <div class="card-panel teal">
+            <span class="white-text"> {{error}} </span>
+          </div>
+        {% endif %}
+        <form method="POST" action="/funcionario/{{ id }}/editar">
+            <fieldset class="form-field" style="border: 0; text-align: left;">
+                {{ form.nome.label }}
+                {{ form.nome }}
+                {% if form.nome.errors %}
+                <ul class="errors">
+                    {% for error in form.nome.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="form-field" style="border: 0; text-align: left;">
+                {{ form.email.label }}
+                {{ form.email }}
+                {% if form.email.errors %}
+                <ul class="errors">
+                    {% for error in form.email.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="form-field" style="border: 0; text-align: left;">
+                {{ form.idCargo.label(style="margin: 0px") }}
+                <div class="input-field col s12">
+                    {{ form.idCargo(style="display: block;width: 100%;") }}
+                    {% if form.idCargo.errors %}
+                    <ul class="errors">
+                        {% for error in form.idCargo.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </fieldset>
+            <fieldset class="form-field" style="border: 0; text-align: left;">
+                {{ form.senha.label }}
+                {{ form.senha }}
+                {% if form.senha.errors %}
+                <ul class="errors">
+                    {% for error in form.senha.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="form-field" style="border: 0; text-align: left;">
+                {{ form.confirmSenha.label }}
+                {{ form.confirmSenha }}
+                {% if form.confirmSenha.errors %}
+                <ul class="errors">
+                    {% for error in form.confirmSenha.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="form-field" style="border: 0; text-align: left;">
+                <label>
+                    {{ form.desabilitado(class="filled-in red") }}
+                    <span>Desativar funcionario</span>
+                </label>
+                {% if form.desabilitado.errors %}
+                <ul class="errors">
+                    {% for error in form.desabilitado.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <button class="btn waves-effect waves-light" type="submit" id="enviar" style="margin: 25px;background-color: green;">Salvar</button>
+            <a href="/funcionarios"><button class="btn waves-effect waves-light" type="button" style="margin: 25px;background-color: red">Cancelar</button></a>
+        </form>
+    </div>
+</div>
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<style>
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after {
+
+  top: 0;
+
+  width: 20px;
+
+  height: 20px;
+
+  border: 2px solid red;
+
+  background-color: red;
+
+  z-index: 0;
+
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.60/inputmask/jquery.inputmask.js"></script>
+
+<script type='text/javascript'>
+    $("#cpf").inputmask("999.999.999-99");
+</script>
+{% endblock %}

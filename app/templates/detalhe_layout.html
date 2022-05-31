@@ -3,13 +3,13 @@
 <table>
     <tr style="border: 0">
         <td style="border: 0">
-            <ul id="slide-out" class="sidenav sidenav-fixed">
-                <li><a href="/empresa">Dashboard</a></li>
-                <li><a href="/cargos">Cargos</a></li>
-                <li><a href="/funcionarios">Funcionarios</a></li>
+            <ul class="collection sidemenu">
+                <a class="lateral collection-item innerlateral" href="/empresa">Dashboard</a>
+                <a class="collection-item lateral innerlateral" href="/cargos" >Cargos</a>
+                <a class="collection-item lateral innerlateral" href="/funcionarios">Funcionarios</a>
             </ul>
         </td>
-        <td  style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;width: 100%; border: 0">
+        <td  style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;width: 100%; border: 0;margin-left: 80px">
             {% block empresa %}{% endblock %}
         </td>
     </tr>

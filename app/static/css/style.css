@@ -32,3 +32,39 @@ main {
     z-index: 0;
     height: calc(90%);
 }
+
+.sidemenu{
+    position:  absolute;
+    display: flex;
+    flex-wrap: nowrap;
+    min-height: 85vh;
+    flex-direction: column;
+    align-content: center;
+    align-items: stretch;
+    top: 57px;
+    left: 1px;
+    width: 10%;
+    min-width: max-content;
+}
+
+.lateral{
+    color: rgba(0,0,0,0.87);
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 32px;
+}
+
+.innerlateral:hover{
+    background-color: rgba(242,242,242,0.87);
+}
+
+.collection a.collection-item{
+    color: rgba(0,0,0,0.87);
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 32px;
+}

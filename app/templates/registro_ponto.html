@@ -2,7 +2,7 @@
 <!--criamos um bloco de conteúdo a ser interpretado pelo python-->
 {% block conteudo %}
 <div style="display: inline-flex;flex-direction: column;align-items: center; padding: 25px;">
-    <h5 class="indigo-text">Centralize seu rosto na camera e clique no botão "Bater ponto"</h5>
+    <h5 style="color: #F2A154;">Centralize seu rosto na camera e clique no botão "Bater ponto"</h5>
     <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
         <video id="video" width="640" height="480" autoplay></video>
 
@@ -10,7 +10,7 @@
             <form method="post" enctype=multipart/form-data id="myForm">
 
             </form>
-            <button id="snap" class="btn waves-effect waves-light">Bater ponto</button>
+            <button id="snap" class="btn waves-effect waves-light" style="background-color: #FF7315;">Bater ponto</button>
             <h6 id="message"></h6>
         </div>
         <div id="results"></div>

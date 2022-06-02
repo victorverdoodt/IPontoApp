@@ -1,7 +1,7 @@
 {% extends "detalhe_layout.html" %}
 {% block empresa %}
 <div style="display: inline-flex;flex-direction: column;align-items: start;width: 100%;margin-left: 25%">
-   <a href="/funcionario"><button class="btn waves-effect waves-light"> Novo <i class="material-icons right">send</i> </button></a>
+   <a href="/funcionario"><button style="background-color: #FF7315" class="btn waves-effect waves-light"> Novo <i class="material-icons right">send</i> </button></a>
   <table id="data" class="highlight">
     <thead>
       <tr>
@@ -19,9 +19,9 @@
           <td>{{ user.cpf }}</td>
           <td>{{ user.email }}</td>
           <td>
-            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Cadastrar foto" href="/ponto/{{ user.id_funcionario }}"><i class="Small material-icons">add_a_photo</i></a>
-            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Retirar relatorio" href="/ponto/{{ user.id_funcionario }}/relatorio"><i class="Small material-icons">archive</i></a>
-            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Editar" href="/funcionario/{{ user.id_funcionario }}/editar"><i class="Small material-icons">mode_edit</i></a>
+            <a style="background-color: #FF7315" class="btn-floating tooltipped" data-position="bottom" data-tooltip="Cadastrar foto" href="/ponto/{{ user.id_funcionario }}"><i class="Small material-icons">add_a_photo</i></a>
+            <a style="background-color: #FF7315" class="btn-floating tooltipped" data-position="bottom" data-tooltip="Retirar relatorio" href="/ponto/{{ user.id_funcionario }}/relatorio"><i class="Small material-icons">archive</i></a>
+            <a style="background-color: #FF7315" class="btn-floating tooltipped" data-position="bottom" data-tooltip="Editar" href="/funcionario/{{ user.id_funcionario }}/editar"><i class="Small material-icons">mode_edit</i></a>
           </td>
         </tr>
       {% endfor %}

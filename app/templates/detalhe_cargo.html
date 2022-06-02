@@ -1,7 +1,7 @@
 {% extends "detalhe_layout.html" %}
 {% block empresa %}
 <div style="display: inline-flex;flex-direction: column;align-items: start;width: 100%;margin-left: 25%">
-   <a href="/cargo"><button class="btn waves-effect waves-light"> Novo <i class="material-icons right">send</i> </button></a>
+   <a href="/cargo"><button style="background-color: #FF7315" class="btn waves-effect waves-light"> Novo <i class="material-icons right">send</i> </button></a>
   <table id="data" class="highlight">
     <thead>
       <tr>
@@ -17,7 +17,7 @@
           <td>{{ user.titulo }}</td>
           <td>{{ user.descricao }}</td>
           <td>
-            <a class="btn-floating tooltipped" data-position="bottom" data-tooltip="Desativar" href="/cargo/{{ user.id_cargo }}/desabilitar"><i class="Small material-icons">delete_forever</i></a>
+            <a style="background-color: #FF7315" class="btn-floating tooltipped" data-position="bottom" data-tooltip="Desativar" href="/cargo/{{ user.id_cargo }}/desabilitar"><i class="Small material-icons">delete_forever</i></a>
           </td>
         </tr>
       {% endfor %}

@@ -25,6 +25,14 @@ def hello():
     else:
         return redirect('/empresa')
 
+@app.route('/detalhes')
+def hellof():
+    logado = helper.token_validate(request)
+    if not logado:
+        return render_template('home_page.html', logado=logado, title="IPonto - Bem-vindo!")
+    else:
+        return render_template('detalhes.html', logado=logado, title="Dashboard - funcionario!")
+
 
 @app.route('/cadastro')
 def hello2():

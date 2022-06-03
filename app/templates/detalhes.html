@@ -1,8 +1,20 @@
-{% extends "detalhe_layout.html" %}
-<!--criamos um bloco de conteúdo a ser interpretado pelo python-->
+{% extends "detalhe_funcionario_layout.html" %}
 {% block empresa %}
-<h2>Welcome to the admin panel, {{user}}</h2>
-<div>
-    <p>Here you can manage the website</p>
-</div>
+<div style="display: inline-flex;flex-direction: column;align-items: start;width: 100%;margin-left: 25%">
+  <h5 style="color: #F2A154;">Lista de pontos</h5>
+  <table id="data" class="highlight">
+    <thead>
+      <tr>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.data_criacao }} </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
 {% endblock %}

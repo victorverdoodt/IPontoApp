@@ -8,7 +8,7 @@
         {% else %}
         <title>Admin panel</title>
         {% endif %}
-        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="{{url_for('static',filename = 'img/Logo.ico')}}">
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="{{url_for('static',filename = 'css/materialize.css')}}" rel="stylesheet" media="screen,projection">
@@ -18,7 +18,7 @@
     <body class="d-flex flex-column h-100">
         <header>
             <nav role="navigation" style="z-index: 1; background-color: #444444">
-                <div class="nav-wrapper container"><a id="logo-container" href="./" class="brand-logo">Logo</a>
+                <div class="nav-wrapper container"><a id="logo-container" href="./" class="brand-logo"> <img src="{{url_for('static',filename = 'img/Logo.png')}}" style="width: 64px;height: 64px;"> </a>
                     <ul class="right hide-on-med-and-down">
                         {% if logado[0] %}
                             {% if logado[1] == 0 %}
@@ -26,7 +26,6 @@
                                 <li><a href="/ponto">Ponto</a></li>
                                 <li><a href="/logout">Sair</a></li>
                             {% else %}
-                                <li><a href="/detalhes">Empresa</a></li>
                                 <li><a href="/logout">Sair</a></li>
                             {% endif %}
                         {% else %}

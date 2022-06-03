@@ -16,10 +16,9 @@ def funcionario_by_id(id):
 
 
 def funcionario_by_cpf(cpf):
-    try:
-        return Funcionario.query.filter(Funcionario.cpf == cpf).filter(Funcionario.id_status == 1).one()
-    except:
-        return None
+
+    return Funcionario.query.filter(Funcionario.cpf == cpf).filter(Funcionario.id_status == 1).one()
+
 
 
 def funcionarios_by_empresa(idEmpresa):

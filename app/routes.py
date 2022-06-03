@@ -25,13 +25,16 @@ def hello():
     else:
         return redirect('/empresa')
 
+
 @app.route('/detalhes')
-def hellof():
-    logado = helper.token_validate(request)
-    if not logado:
-        return render_template('home_page.html', logado=logado, title="IPonto - Bem-vindo!")
+@helper.token_required
+def hellof(current_user):
+    if current_user[1] == 1:
+        logado = helper.token_validate(request)
+        ponto = funcionario_ponto.funcionario_ponto_by_id_funcionario(current_user[0].id_funcionario)
+        return render_template('detalhes.html', logado=logado, title="Dashboard - funcionario!", users=ponto)
     else:
-        return render_template('detalhes.html', logado=logado, title="Dashboard - funcionario!")
+        redirect('/empresa')
 
 
 @app.route('/cadastro')
@@ -58,7 +61,8 @@ def authenticate():
     if request.method == 'POST':
         return helper.auth(form, True)
 
-    return render_template('login_empresa.html', form=form, error=None, logado=helper.token_validate(request), title="Login Empresa")
+    return render_template('login_empresa.html', form=form, error=None, logado=helper.token_validate(request),
+                           title="Login Empresa")
 
 
 @app.route('/loginfuncionario', methods=['POST', 'GET'])
@@ -67,7 +71,8 @@ def authenticatef():
     if request.method == 'POST':
         return helper.auth(form, False)
 
-    return render_template('login_funcionario.html', form=form, error=None, logado=helper.token_validate(request), title="Login funcionario")
+    return render_template('login_funcionario.html', form=form, error=None, logado=helper.token_validate(request),
+                           title="Login funcionario")
 
 
 @app.route('/logout', methods=['GET'])
@@ -123,7 +128,7 @@ def detalhe_funcionario(current_user):
         users = funcionario.funcionarios_by_empresa(current_user[0].id_empresa)
 
         if cargo.count_cargo_by_id_empresa(current_user[0].id_empresa) <= 0:
-            return render_template('funcionario_erro.html',  logado=logado, title="Erro em cargos")
+            return render_template('funcionario_erro.html', logado=logado, title="Erro em cargos")
 
         return render_template('detalhe_funcionario.html', users=users, logado=logado, title="Funcionarios")
 
@@ -138,14 +143,15 @@ def registro_funcionario(current_user):
         logado = helper.token_validate(request)
         form = FuncionarioCadastro()
         if cargo.count_cargo_by_id_empresa(current_user[0].id_empresa) <= 0:
-            return render_template('funcionario_erro.html',  logado=logado, title="Erro em cargos")
+            return render_template('funcionario_erro.html', logado=logado, title="Erro em cargos")
 
         countries_list = [(i.id_cargo, i.titulo) for i in cargo.cargo_by_id_empresa(current_user[0].id_empresa)]
         form.idCargo.choices = countries_list
         if request.method == 'POST':
             return funcionario.post_funcionario(form, current_user[0].id_empresa)
 
-        return render_template('registro_funcionario.html', form=form, error=None, logado=logado, title="Cadastro funcionario")
+        return render_template('registro_funcionario.html', form=form, error=None, logado=logado,
+                               title="Cadastro funcionario")
 
     return redirect('/detalhes')
 
@@ -173,7 +179,8 @@ def editar_funcionario(current_user, id):
                 form.cpf.data = funci.cpf
             return funcionario.update_funcionario(form)
 
-        return render_template('editar_funcionario.html', form=form, error=None, logado=logado, id=id, title="Editar funcionario")
+        return render_template('editar_funcionario.html', form=form, error=None, logado=logado, id=id,
+                               title="Editar funcionario")
 
     return redirect('/detalhes')
 

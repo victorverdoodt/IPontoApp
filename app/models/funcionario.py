@@ -4,6 +4,10 @@ from app import db, ma
 
 
 class Funcionario(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('id_funcionario', 'cpf', 'id_empresa', name='unique_funcionario'),
+    )
+
     id_funcionario = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(40), nullable=False)
     cpf = db.Column(db.String(11), nullable=False)

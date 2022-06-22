@@ -1,5 +1,3 @@
-# Face Recognition App
+# IPonto
 
-Uses Flask, Python simple JS and AWS Rekognition to do face recognition.
-
-Upload a face and then compare to those in a collection.
+Trabalho de faculdade utilizando tecnologia de reconhecimento facial para marcar entrada e saida de funcionarios.
